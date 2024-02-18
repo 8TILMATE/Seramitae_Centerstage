@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.robotcontroller.external.samples;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -37,6 +38,9 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+
 
 import java.util.List;
 
@@ -51,6 +55,20 @@ import java.util.List;
 @Disabled
 public class ConceptTensorFlowObjectDetectionEasy extends LinearOpMode {
 
+    public static boolean albastru;
+    @Config
+    public static class ServoArm {
+        public static boolean albastru1;
+
+        public static void isAlbastru1() {
+            if(albastru1){
+                albastru=true;
+            }
+            else{
+                albastru=false;
+            }
+        }
+    }
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     /**
@@ -72,6 +90,7 @@ public class ConceptTensorFlowObjectDetectionEasy extends LinearOpMode {
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
         telemetry.addData(">", "Touch Play to start OpMode");
         telemetry.update();
+        FtcDashboard dashboard = FtcDashboard.getInstance();
         waitForStart();
 
         if (opModeIsActive()) {

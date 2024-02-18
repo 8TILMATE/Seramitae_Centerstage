@@ -19,10 +19,12 @@ public class Test_sin extends OpMode {
     Servo Inch;
     Servo I1;
     Servo I2;
+    Servo I3;
     DcMotor motor1;
     DcMotor motor2;
     DcMotor motor3;
     DcMotor motor4;DcMotor intake;
+    DcMotor pula;
     DistanceSensor  stanga,dreapta;
     public float leftstickx;
     public float leftsticky;
@@ -30,6 +32,7 @@ public class Test_sin extends OpMode {
     public int toggler=1;
     long setTime = System.currentTimeMillis();
     long setTime1 = System.currentTimeMillis();
+
 
     boolean hasRun = true;
     boolean hasRun1 = true;
@@ -41,6 +44,7 @@ public class Test_sin extends OpMode {
         Inch= hardwareMap.get(Servo.class,"Incheietura");
         I1 = hardwareMap.get(Servo.class,"i1");
         I2 = hardwareMap.get(Servo.class,"i2");
+        I3 = hardwareMap.get(Servo.class,"i3");
         motor1=hardwareMap.get(DcMotor.class,"LF");
         motor2=hardwareMap.get(DcMotor.class,"LR");
         motor3=hardwareMap.get(DcMotor.class,"RF");
@@ -48,6 +52,7 @@ public class Test_sin extends OpMode {
         intake=hardwareMap.get(DcMotor.class,"Intake");
         stanga=hardwareMap.get(DistanceSensor.class,"stanga");
         dreapta=hardwareMap.get(DistanceSensor.class,"dreapta");
+        pula=hardwareMap.get(DcMotor.class,"nez");
         telemetry.addData("dute:"," in plm robert");
         telemetry.update();
     }
@@ -70,9 +75,9 @@ public class Test_sin extends OpMode {
     @Override
     public void loop() {
 
-        leftstickx=gamepad1.left_stick_x;
-        leftsticky=gamepad1.left_stick_y;
-        pivot=gamepad1.right_stick_x/0.75f;
+        leftstickx=gamepad1.left_stick_x/1.25f;
+        leftsticky=gamepad1.left_stick_y/1.25f;
+        pivot=gamepad1.right_stick_x/3f;
         double denominator = Math.max(Math.abs(leftstickx)+Math.abs(leftsticky)+ Math.abs(pivot),1);
         motor1.setPower((pivot+ -leftsticky+leftstickx)/denominator);
         motor2.setPower((pivot+ -leftsticky-leftstickx)/denominator);
@@ -80,38 +85,47 @@ public class Test_sin extends OpMode {
         motor4.setPower((-pivot+ -leftsticky+leftstickx)/denominator);
         telemetry.addData("leftsticky:", String.valueOf(-leftsticky));
         telemetry.addData("leftstickx:", String.valueOf(leftstickx));
-        telemetry.addData("Dreapta:",String.valueOf(dreapta.getDistance(DistanceUnit.CM)));
-        telemetry.addData("Stanga:",String.valueOf(stanga.getDistance(DistanceUnit.CM)));
+
+        // telemetry.addData("Dreapta:",String.valueOf(dreapta.getDistance(DistanceUnit.CM)));
+        // telemetry.addData("Stanga:",String.valueOf(stanga.getDistance(DistanceUnit.CM)));
 
 
 
         if(gamepad1.dpad_up){
-            motor1.setPower((0.32f)/denominator);
-            motor2.setPower((0.32f)/denominator);
-            motor3.setPower((0.32f)/denominator);
-            motor4.setPower((0.32f)/denominator);
+            motor1.setPower((0.52f)/denominator);
+            motor2.setPower((0.52f)/denominator);
+            motor3.setPower((0.52f)/denominator);
+            motor4.setPower((0.52f)/denominator);
         }
         if(gamepad1.dpad_down){
-            motor1.setPower((-0.32f)/denominator);
-            motor2.setPower((-0.32f)/denominator);
-            motor3.setPower((-0.32f)/denominator);
-            motor4.setPower((-0.32f)/denominator);
+            motor1.setPower((-0.52f)/denominator);
+            motor2.setPower((-0.52f)/denominator);
+            motor3.setPower((-0.52f)/denominator);
+            motor4.setPower((-0.52f)/denominator);
         }
         if(gamepad1.dpad_right){
-            motor1.setPower((+0.32)/denominator);
-            motor2.setPower((-0.32)/denominator);
-            motor3.setPower((-0.32)/denominator);
-            motor4.setPower((+0.32)/denominator);
+            motor1.setPower((+0.52)/denominator);
+            motor2.setPower((-0.52)/denominator);
+            motor3.setPower((-0.52)/denominator);
+            motor4.setPower((+0.52)/denominator);
         }
         if(gamepad1.dpad_left){
-            motor1.setPower((-0.32)/denominator);
-            motor2.setPower((+0.32)/denominator);
-            motor3.setPower((+0.32)/denominator);
-            motor4.setPower((-0.32)/denominator);
+            motor1.setPower((-0.52)/denominator);
+            motor2.setPower((+0.52)/denominator);
+            motor3.setPower((+0.52)/denominator);
+            motor4.setPower((-0.52)/denominator);
         }
         motor3.setDirection(DcMotorSimple.Direction.REVERSE);
         motor4.setDirection(DcMotorSimple.Direction.REVERSE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        pula.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        telemetry.addData("Motor",String.valueOf(pula.getPower()));
+        if(gamepad1.a){
+            I2.setPosition(0.5);
+        }
+        if(gamepad1.b){
+            I2.setPosition(-1);
+        }
         /*if(gamepad1.a&&hasRun1==true){
             if(toggler==1){
                 intake.setPower(1);
@@ -143,15 +157,15 @@ public class Test_sin extends OpMode {
         else{
             intake.setPower(0);
         }
-        if(gamepad1.left_bumper){
+        if(gamepad2.left_bumper){
             Inch.setPosition(1);
         }
-        if(gamepad1.right_bumper){
+        if(gamepad2.right_bumper){
             Inch.setPosition(-1);
         }
         if(gamepad1.y){
             I1.setPosition(0.5);
-            I2.setPosition(0);
+            //I2.setPosition(0);
             //setTime=System.currentTimeMillis();
           //  hasRun=false;
 
@@ -159,8 +173,20 @@ public class Test_sin extends OpMode {
         }
         if(gamepad1.x){
             I1.setPosition(0);
-            I2.setPosition(0.47);
+            //I2.setPosition(0.47);
 
+        }
+        if(gamepad2.left_trigger>0){
+            pula.setPower(-gamepad2.left_trigger);
+        }
+        if(gamepad2.right_trigger>0){
+            pula.setPower(gamepad2.right_trigger);
+        }
+        if(gamepad2.a){
+            I3.setPosition(0.5);
+        }
+        if(gamepad2.b){
+            I3.setPosition(1);
         }
         if (System.currentTimeMillis() - setTime > 500 && !hasRun){
             I1.setPosition(-0.9);
