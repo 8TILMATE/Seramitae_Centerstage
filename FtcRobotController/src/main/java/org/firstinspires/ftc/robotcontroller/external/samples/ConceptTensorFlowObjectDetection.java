@@ -81,7 +81,7 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
     public static boolean albastru;
     @Config
     public static class ServoArm {
-        public static boolean albastru1;
+        public static boolean albastru1=false;
 
         public boolean  isAlbastru1() {
             return albastru1;
@@ -101,9 +101,10 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         waitForStart();
         ServoArm arm = new ServoArm();
         albastru=arm.isAlbastru1();
+        albastru=true;
         if(albastru){
-            TFOD_MODEL_ASSET="Model.tflite";
-            TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/Model.tflite";
+            TFOD_MODEL_ASSET="Model_Albastru_Regio.tflite";
+            TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/Model_Albastru_Regio.tflite";
         }
         else{
             TFOD_MODEL_ASSET="Model1.tflite";

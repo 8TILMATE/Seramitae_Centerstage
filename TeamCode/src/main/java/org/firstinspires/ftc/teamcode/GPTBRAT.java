@@ -97,7 +97,7 @@ public class GPTBRAT extends OpMode {
                         if (progress >= 1.0) {
                             armServo.setPosition(targetPosition);
                             startTime = getRuntime(); // Reset start time for the next motion profile
-                            telemetry.addData("dute:"," in plm robert");
+
                             exit=false;
                         }
 
